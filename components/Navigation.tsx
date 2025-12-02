@@ -1,0 +1,79 @@
+import React from 'react';
+import { ViewMode } from '../types';
+
+interface NavigationProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  currentMode: ViewMode;
+  setMode: (mode: ViewMode) => void;
+}
+
+const Navigation: React.FC<NavigationProps> = ({ isOpen, setIsOpen, currentMode, setMode }) => {
+  const menuItems = [
+    { mode: ViewMode.BREATHE, label: '一息呼吸 (Breathe)', icon: '🌬️' },
+    { mode: ViewMode.SOUND, label: '聽覺療癒 (Sound)', icon: '🎵' },
+    { mode: ViewMode.INSIGHT, label: '靈感籤詩 (Insight)', icon: '🎋' },
+    { mode: ViewMode.AI_GUIDE, label: 'AI 撫慰 (AI Guide)', icon: '✨' },
+    { mode: ViewMode.ABOUT, label: '關於我們 (About)', icon: '🏡' },
+    // { mode: ViewMode.VISUAL, label: '視覺沉浸 (Visual)', icon: '🌿' },
+  ];
+
+  return (
+    <>
+      {/* Hamburger Button */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className={`fixed top-6 left-6 z-50 p-3 rounded-full bg-morandi-white shadow-sm hover:shadow-md transition-all duration-300 text-morandi-charcoal ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        aria-label="Open Menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Backdrop */}
+      <div 
+        className={`fixed inset-0 bg-morandi-charcoal/20 backdrop-blur-sm z-40 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsOpen(false)}
+      />
+
+      {/* Sidebar Drawer */}
+      <div className={`fixed top-0 left-0 h-full w-80 bg-[#F2F2F2] shadow-2xl z-50 transform transition-transform duration-300 ease-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 flex justify-between items-center border-b border-gray-200">
+          <h2 className="text-xl font-bold text-morandi-green tracking-widest">一息休息站 BreathNest</h2>
+          <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="p-4 space-y-2">
+          {menuItems.map((item) => (
+            <button
+              key={item.mode}
+              onClick={() => {
+                setMode(item.mode);
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center space-x-4 px-4 py-4 rounded-xl transition-all duration-200 ${
+                currentMode === item.mode 
+                  ? 'bg-morandi-green text-white shadow-md' 
+                  : 'hover:bg-morandi-sand/30 text-morandi-charcoal'
+              }`}
+            >
+              <span className="text-xl">{item.icon}</span>
+              <span className="font-medium tracking-wide">{item.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="absolute bottom-8 left-0 w-full px-6 text-center text-xs text-gray-400">
+           Digital Minimalism & Micro-breaks
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Navigation;
