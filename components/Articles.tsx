@@ -14,6 +14,7 @@ const Articles: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [expandedArticleId, setExpandedArticleId] = useState<string | null>(null);
 
   // Form state for upload/edit
   const [formData, setFormData] = useState({
@@ -266,48 +267,74 @@ const Articles: React.FC = () => {
 
       {/* Articles List */}
       {!isLoading && (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {articles.length === 0 ? (
             <div className="text-center py-12 bg-gradient-to-br from-white/90 to-[#F3F7F0]/90 rounded-2xl border border-white/60">
               <p className="text-[#5A7B52]/60">尚無文章，新增第一篇吧！</p>
             </div>
           ) : (
-            articles.map((article) => (
-              <div
-                key={article.id}
-                className="bg-gradient-to-br from-white/90 to-[#F3F7F0]/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 p-6 hover:shadow-xl transition-shadow"
-              >
-                {/* Article Header */}
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-[#4A6B4A]">{article.title}</h3>
-                    <div className="flex gap-4 text-sm text-[#5A7B52]/70 mt-2">
-                      <span>📅 {formatDate(article.date)}</span>
-                      <span>✍️ {article.author}</span>
+            articles.map((article) => {
+              const isExpanded = expandedArticleId === article.id;
+              return (
+                <div
+                  key={article.id}
+                  className="bg-gradient-to-br from-white/90 to-[#F3F7F0]/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 overflow-hidden hover:shadow-xl transition-shadow"
+                >
+                  {/* Collapsible Header */}
+                  <button
+                    onClick={() =>
+                      setExpandedArticleId(isExpanded ? null : article.id)
+                    }
+                    className="w-full px-6 py-4 flex justify-between items-start hover:bg-white/40 transition-colors text-left"
+                  >
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-[#4A6B4A]">
+                        {article.title}
+                      </h3>
+                      <div className="flex gap-4 text-sm text-[#5A7B52]/70 mt-2">
+                        <span>📅 {formatDate(article.date)}</span>
+                        <span>✍️ {article.author}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEdit(article)}
-                      className="px-3 py-1 bg-blue-100 text-blue-700 rounded font-medium hover:bg-blue-200 transition-colors text-sm"
-                    >
-                      編輯
-                    </button>
-                    <button
-                      onClick={() => handleDelete(article.id)}
-                      className="px-3 py-1 bg-red-100 text-red-700 rounded font-medium hover:bg-red-200 transition-colors text-sm"
-                    >
-                      刪除
-                    </button>
-                  </div>
-                </div>
+                    <div className="flex-shrink-0 ml-4">
+                      <span
+                        className={`text-2xl text-morandi-green transition-transform duration-300 ${
+                          isExpanded ? 'rotate-180' : ''
+                        }`}
+                      >
+                        ▼
+                      </span>
+                    </div>
+                  </button>
 
-                {/* Article Content */}
-                <div className="text-[#5A7B52] leading-relaxed whitespace-pre-wrap break-words">
-                  {article.content}
+                  {/* Expanded Content */}
+                  {isExpanded && (
+                    <div className="border-t border-[#B8D4A8]/30 px-6 py-4 bg-white/20 space-y-4">
+                      {/* Article Content */}
+                      <div className="text-[#5A7B52] leading-relaxed whitespace-pre-wrap break-words max-h-96 overflow-y-auto">
+                        {article.content}
+                      </div>
+
+                      {/* Edit & Delete Buttons */}
+                      <div className="flex gap-3 pt-4 border-t border-[#B8D4A8]/30">
+                        <button
+                          onClick={() => handleEdit(article)}
+                          className="flex-1 px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium hover:bg-blue-200 transition-colors text-sm"
+                        >
+                          ✏️ 編輯
+                        </button>
+                        <button
+                          onClick={() => handleDelete(article.id)}
+                          className="flex-1 px-4 py-2 bg-red-100 text-red-700 rounded-lg font-medium hover:bg-red-200 transition-colors text-sm"
+                        >
+                          🗑️ 刪除
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       )}
