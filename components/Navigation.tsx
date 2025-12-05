@@ -27,6 +27,7 @@ const Navigation: React.FC<NavigationProps> = ({ isOpen, setIsOpen, currentMode,
     { mode: ViewMode.INSIGHT, label: '靈感籤詩 (Insight)', icon: '🎋' },
     { mode: ViewMode.AI_GUIDE, label: 'AI 撫慰 (AI Guide)', icon: '✨' },
     { mode: ViewMode.NATURE_DIALOGUE, label: '與自然對話 (Nature)', icon: '🌿' },
+    { mode: ViewMode.ARTICLES, label: '療癒文章 (Articles)', icon: '📄' },
     // { mode: ViewMode.VISUAL, label: '視覺沉浸 (Visual)', icon: '🌿' },
   ];
 

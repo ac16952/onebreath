@@ -7,9 +7,17 @@ export enum ViewMode {
   ABOUT = 'ABOUT',
   RELEASE = 'RELEASE',
   NATURE_DIALOGUE = 'NATURE_DIALOGUE',
-  SELF_HEAL = 'SELF_HEAL'
-  ,
-  SLEEP_HEAL = 'SLEEP_HEAL'
+  SELF_HEAL = 'SELF_HEAL',
+  SLEEP_HEAL = 'SLEEP_HEAL',
+  ARTICLES = 'ARTICLES'
+}
+
+export interface Article {
+  id: string;
+  date: string; // ISO format: YYYY-MM-DD
+  title: string;
+  author: string;
+  content: string;
 }
 
 export interface Quote {

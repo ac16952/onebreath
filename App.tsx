@@ -8,6 +8,7 @@ import About from './components/About';
 import BottleRelease from './components/BottleRelease';
 import NatureDialogue from './components/NatureDialogue';
 import SleepWell from './components/SleepWell';
+import Articles from './components/Articles';
 import { ViewMode } from './types';
 
 const App: React.FC = () => {
@@ -32,6 +33,8 @@ const App: React.FC = () => {
         return <NatureDialogue />;
       case ViewMode.SLEEP_HEAL:
         return <SleepWell />;
+      case ViewMode.ARTICLES:
+        return <Articles />;
       default:
         return <BreathingExercise />;
     }
