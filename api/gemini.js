@@ -11,8 +11,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing mood in request body' });
   }
 
+  // Log presence of environment variables (boolean only) so we can verify
+  // in Vercel function logs whether the key is available without printing it.
+  const hasGemini = !!process.env.GEMINI_API_KEY;
+  const hasGoogle = !!process.env.GOOGLE_API_KEY;
+  console.log('api/gemini invoked. GEMINI_API_KEY present:', hasGemini, 'GOOGLE_API_KEY present:', hasGoogle);
+
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   if (!apiKey) {
+    console.error('api/gemini: missing API key (GEMINI_API_KEY/GOOGLE_API_KEY)');
     return res.status(500).json({ error: 'Server missing GEMINI API key' });
   }
 
@@ -40,7 +47,7 @@ export default async function handler(req, res) {
     const text = response?.text || '';
     return res.status(200).json({ text });
   } catch (err) {
-    console.error('Gemini server error:', err);
+    console.error('Gemini server error:', err?.message || err);
     return res.status(502).json({ error: 'AI service unavailable' });
   }
 }

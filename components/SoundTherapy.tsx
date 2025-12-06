@@ -28,7 +28,7 @@ const SoundTherapy: React.FC = () => {
             key={track.id}
             onClick={() => handlePlay(track.id, track.type)}
             className={`
-              relative overflow-hidden group rounded-2xl p-6 h-48 flex flex-col items-center justify-center space-y-4 transition-all duration-500
+              relative overflow-auto group rounded-2xl p-6 h-48 flex flex-col items-center justify-center space-y-4 transition-all duration-500
               ${activeSound === track.id ? 'shadow-inner scale-95 ring-2 ring-morandi-charcoal/10' : 'shadow-lg hover:-translate-y-1'}
               ${track.color}
             `}

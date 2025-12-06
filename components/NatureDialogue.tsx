@@ -55,7 +55,7 @@ const NatureDialogue: React.FC = () => {
   }, [selectedCard]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 bg-gradient-to-br from-white/90 via-[#F8FAF5]/95 to-[#F0F5ED]/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-white/70 animate-fade-in overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto p-6 bg-gradient-to-br from-white/90 via-[#F8FAF5]/95 to-[#F0F5ED]/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-white/70 animate-fade-in overflow-auto">
       {/* Decorative corner elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#B8D4A8]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-[#A8C491]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>

@@ -130,7 +130,7 @@ const BottleRelease: React.FC = () => {
         </button>
       </div>
 
-      <div className="relative mt-8 h-40 overflow-hidden">
+      <div className="relative mt-8 h-40 overflow-auto">
         {/* SVG path is kept for decorative purposes */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox={`0 0 ${Math.max(600, typeof window !== 'undefined' ? window.innerWidth : 800)} 160`} preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <path d={`M 40 120 C ${Math.max(150, 0.25 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 80, ${Math.max(300, 0.6 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 60, ${Math.max(560, (typeof window !== 'undefined' ? window.innerWidth : 600) - 40)} 100`} fill="none" stroke="#E6E6E6" strokeWidth={2} opacity={0.12} />

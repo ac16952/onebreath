@@ -54,7 +54,7 @@ const SleepWell: React.FC = () => {
       <section className="mb-4">
         <h3 className="text-lg font-semibold text-[#5A7B52] mb-2">放鬆短片</h3>
         <p className="text-[#5A7B52]/80 mb-2">下方影片放在 `public/video/video1.mp4`，若尚未上傳請將檔案放入該位置。</p>
-        <div className="w-full rounded overflow-hidden shadow-inner border border-white/30">
+        <div className="w-full rounded overflow-auto shadow-inner border border-white/30">
           <video
             className="w-full h-auto bg-black"
             controls

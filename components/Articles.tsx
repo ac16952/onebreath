@@ -278,7 +278,7 @@ const Articles: React.FC = () => {
               return (
                 <div
                   key={article.id}
-                  className="bg-gradient-to-br from-white/90 to-[#F3F7F0]/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 overflow-hidden hover:shadow-xl transition-shadow"
+                  className="bg-gradient-to-br from-white/90 to-[#F3F7F0]/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 overflow-auto hover:shadow-xl transition-shadow"
                 >
                   {/* Collapsible Header */}
                   <button

@@ -41,7 +41,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-b from-[#E8F0E6] via-morandi-bg to-[#D0DCC8] overflow-hidden font-sans selection:bg-morandi-green/30 selection:text-morandi-charcoal">
+    <div className="relative min-h-screen w-full bg-gradient-to-b from-[#E8F0E6] via-morandi-bg to-[#D0DCC8] overflow-auto font-sans selection:bg-morandi-green/30 selection:text-morandi-charcoal">
       
       {/* Background Layer: Clover & Nature */}
       <div className="absolute inset-0 z-0">
@@ -98,16 +98,18 @@ const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main className={`relative z-10 h-screen w-full transition-all duration-700 ease-out ${isMenuOpen ? 'blur-sm scale-95 opacity-80' : 'opacity-100'}`}>
-        <div className="h-full w-full flex flex-col">
+      <main className={`relative z-10 min-h-screen w-full overflow-auto transition-all duration-700 ease-out ${isMenuOpen ? 'blur-sm scale-95 opacity-80' : 'opacity-100'}`}>
+        <div className="min-h-screen w-full flex flex-col">
           {/* Header Spacer (for burger button) */}
           <div className="h-24 w-full flex-none"></div>
-          
-          {/* Content Container */}
-          <div className="flex-grow w-full max-w-7xl mx-auto flex items-center justify-center p-4">
-             {renderContent()}
+
+          {/* Content Container - allow vertical flow and scrolling on overflow */}
+          <div className="flex-grow w-full max-w-7xl mx-auto flex flex-col items-start justify-start p-4 sm:p-6 md:p-8">
+            <div className="w-full">
+              {renderContent()}
+            </div>
           </div>
-          
+
           {/* Footer / Copyright */}
           <div className="h-16 w-full flex-none text-center text-morandi-charcoal/40 text-xs flex items-center justify-center tracking-widest uppercase">
             One Breath Rest Stop &bull; Digital Sanctuary

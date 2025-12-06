@@ -59,14 +59,14 @@
       };
     </script>
     <style>
-      /* Hide scrollbar for cleaner UI */
-      ::-webkit-scrollbar {
-        width: 0px;
-        background: transparent;
-      }
+      /* Body defaults and colors. Avoid globally hiding scrollbars so
+         long pages can scroll naturally on all devices (RWD requirement).
+      */
       body {
         background-color: #D9E2D5;
         color: #4A524A;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
     </style>
   <!-- Removed importmap to avoid browser-level external module mapping in production builds -->
