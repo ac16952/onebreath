@@ -465,18 +465,18 @@ const NatureDialogue: React.FC = () => {
               <h3 className="text-2xl sm:text-3xl font-semibold text-[#5A7B52] drop-shadow-sm mb-2">🃏 情緒引導卡牌</h3>
               <p className="text-[#6B8E5F]/80 mb-6 text-sm sm:text-base md:text-lg">
                 選擇一張卡牌，讓自然的智慧為你帶來當下需要的訊息與療癒。
-              </p>
+            </p>
             </div>
 
             {/* 顯示六張卡牌 */}
             {!drawnCard && (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 mb-6">
-                {emotionCards.map((card) => (
-                  <button
-                    key={card.id}
+              {emotionCards.map((card) => (
+                <button
+                  key={card.id}
                     onClick={() => handleSelectCard(card.id)}
                     className={`bg-gradient-to-br ${card.color} rounded-2xl p-6 sm:p-8 shadow-lg border-2 transition-all duration-300 transform hover:scale-105 ${
-                      selectedCard === card.id
+                    selectedCard === card.id
                         ? 'border-[#7A9E6F] scale-105 shadow-xl'
                         : 'border-white/50 hover:border-[#B8D4A8]/60 hover:shadow-xl'
                     }`}
@@ -664,12 +664,12 @@ const NatureDialogue: React.FC = () => {
 
       {/* Closing Message */}
       {activeTab !== 'card' && (
-        <div className="mt-8 pt-6 border-t-2 border-[#B8D4A8]/30 relative z-10">
-          <p className="text-center text-[#6B8E5F]/80 text-base leading-relaxed">
-            🌱 每一次與自然的對話，都是對自己的一場深度療癒。<br />
-            <span className="font-medium">相信過程，你會找到屬於自己的內在平衡。</span>
-          </p>
-        </div>
+      <div className="mt-8 pt-6 border-t-2 border-[#B8D4A8]/30 relative z-10">
+        <p className="text-center text-[#6B8E5F]/80 text-base leading-relaxed">
+          🌱 每一次與自然的對話，都是對自己的一場深度療癒。<br />
+          <span className="font-medium">相信過程，你會找到屬於自己的內在平衡。</span>
+        </p>
+      </div>
       )}
     </div>
   );

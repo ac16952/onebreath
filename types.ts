@@ -18,6 +18,12 @@ export interface Article {
   title: string;
   author: string;
   content: string;
+  images?: string[]; // Array of image URLs
+  externalUrl?: string; // External URL reference
+  pdfUrl?: string; // PDF file URL
+  wordUrl?: string; // Word file URL
+  pdfFileName?: string; // PDF file name for display
+  wordFileName?: string; // Word file name for display
 }
 
 export interface Quote {
