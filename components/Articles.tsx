@@ -148,14 +148,14 @@ const Articles: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
+    <div className="w-full max-w-4xl mx-auto p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 overflow-y-auto">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold text-[#4A6B4A]">📄 療癒文章</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+        <h2 className="text-xl sm:text-2xl font-semibold text-[#4A6B4A]">📄 療癒文章</h2>
         {!isUploading && !isLoading && (
           <button
             onClick={() => setIsUploading(true)}
-            className="px-4 py-2 bg-morandi-green text-white rounded-lg font-medium hover:bg-[#5A7B52] transition-colors shadow-md"
+            className="px-3 sm:px-4 py-2 bg-morandi-green text-white rounded-lg font-medium hover:bg-[#5A7B52] transition-colors shadow-md text-sm sm:text-base"
           >
             + 新增文章
           </button>
@@ -311,7 +311,7 @@ const Articles: React.FC = () => {
                   {isExpanded && (
                     <div className="border-t border-[#B8D4A8]/30 px-6 py-4 bg-white/20 space-y-4">
                       {/* Article Content */}
-                      <div className="text-[#5A7B52] leading-relaxed whitespace-pre-wrap break-words max-h-96 overflow-y-auto">
+                      <div className="text-[#5A7B52] leading-relaxed whitespace-pre-wrap break-words max-h-64 sm:max-h-80 md:max-h-96 overflow-y-auto text-sm sm:text-base">
                         {article.content}
                       </div>
 

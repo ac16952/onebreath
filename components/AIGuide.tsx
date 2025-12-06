@@ -45,19 +45,19 @@ const AIGuide: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full px-6 max-w-3xl mx-auto animate-fade-in overflow-y-auto py-10">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-light text-morandi-charcoal tracking-widest mb-2">AI 撫慰導師</h2>
-        <p className="text-morandi-charcoal/60 text-sm">告訴我你現在的感受，讓我為你拂去塵埃</p>
+    <div className="flex flex-col items-center justify-center min-h-full w-full px-4 sm:px-6 max-w-3xl mx-auto animate-fade-in overflow-y-auto py-6 sm:py-8 md:py-10">
+      <div className="text-center mb-6 sm:mb-8 md:mb-10">
+        <h2 className="text-2xl sm:text-3xl font-light text-morandi-charcoal tracking-widest mb-2">AI 撫慰導師</h2>
+        <p className="text-morandi-charcoal/60 text-xs sm:text-sm">告訴我你現在的感受，讓我為你拂去塵埃</p>
       </div>
 
       {!responseState.content && !responseState.loading && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 w-full">
           {moodOptions.map((mood) => (
             <button
               key={mood}
               onClick={() => handleGenerate(mood)}
-              className="p-4 rounded-xl bg-white/40 border border-white/50 hover:bg-morandi-blue/20 hover:border-morandi-blue/40 transition-all text-morandi-charcoal text-center"
+              className="p-3 sm:p-4 rounded-xl bg-white/40 border border-white/50 hover:bg-morandi-blue/20 hover:border-morandi-blue/40 transition-all text-morandi-charcoal text-center text-xs sm:text-sm"
             >
               {mood}
             </button>
@@ -73,17 +73,17 @@ const AIGuide: React.FC = () => {
       )}
 
       {responseState.content && (
-        <div className="w-full bg-white/70 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/60 animate-fade-in relative">
+        <div className="w-full bg-white/70 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-white/60 animate-fade-in relative overflow-y-auto">
           <button 
              onClick={() => setResponseState({ loading: false, content: null, error: null })}
-             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+             className="absolute top-2 right-2 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 text-lg sm:text-xl"
           >
             ✕
           </button>
-          <h3 className="text-morandi-green font-bold mb-4 flex items-center">
+          <h3 className="text-morandi-green font-bold mb-3 sm:mb-4 flex items-center text-base sm:text-lg">
             <span className="mr-2">🌿</span> 給 {selectedMood?.split(' ')[0]} 的你
           </h3>
-          <p className="text-lg text-morandi-charcoal leading-loose text-justify font-sans">
+          <p className="text-base sm:text-lg text-morandi-charcoal leading-loose text-justify font-sans">
             {responseState.content}
           </p>
         </div>

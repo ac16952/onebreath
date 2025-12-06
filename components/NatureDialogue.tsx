@@ -55,26 +55,26 @@ const NatureDialogue: React.FC = () => {
   }, [selectedCard]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 bg-gradient-to-br from-white/90 via-[#F8FAF5]/95 to-[#F0F5ED]/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-white/70 animate-fade-in overflow-auto">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-5 md:p-6 bg-gradient-to-br from-white/90 via-[#F8FAF5]/95 to-[#F0F5ED]/90 backdrop-blur-md rounded-2xl sm:rounded-3xl shadow-xl border-2 border-white/70 animate-fade-in overflow-y-auto">
       {/* Decorative corner elements */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#B8D4A8]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-[#A8C491]/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Header */}
       <div className="relative z-10">
-        <h2 className="text-4xl font-semibold text-[#5A7B52] mb-2 flex items-center">
-          <span className="mr-3 text-5xl drop-shadow-lg">🌿</span> 與自然對話
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#5A7B52] mb-2 flex items-center">
+          <span className="mr-2 sm:mr-3 text-3xl sm:text-4xl md:text-5xl drop-shadow-lg">🌿</span> 與自然對話
         </h2>
-        <p className="text-[#6B8E5F]/80 mb-6 leading-relaxed text-lg">
+        <p className="text-[#6B8E5F]/80 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base md:text-lg">
           透過五感冥想與自然連結，在森林療癒中找到內在平衡。讓大自然成為你情緒的避風港。
         </p>
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex flex-wrap gap-2 mb-6 pb-4 border-b-2 border-[#B8D4A8]/30 relative z-10">
+      <div className="flex flex-wrap gap-2 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b-2 border-[#B8D4A8]/30 relative z-10 overflow-x-auto">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'overview'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -84,7 +84,7 @@ const NatureDialogue: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('sight')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'sight'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -94,7 +94,7 @@ const NatureDialogue: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('sound')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'sound'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -104,7 +104,7 @@ const NatureDialogue: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('touch')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'touch'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -114,7 +114,7 @@ const NatureDialogue: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('smell')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'smell'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -124,7 +124,7 @@ const NatureDialogue: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('taste')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'taste'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -134,7 +134,7 @@ const NatureDialogue: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('card')}
-          className={`px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+          className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium transition-all duration-300 text-xs sm:text-sm ${
             activeTab === 'card'
               ? 'bg-gradient-to-r from-[#7A9E6F] to-[#6B8E5F] text-white shadow-lg scale-105'
               : 'bg-[#F0F5ED] text-[#5A7B52] hover:bg-[#E8F0E6] border border-[#B8D4A8]/40'
@@ -206,7 +206,7 @@ const NatureDialogue: React.FC = () => {
             <p className="text-[#6B8E5F]/80 mb-6 text-lg">
               點選一張卡牌，讓自然的智慧為你帶來當下需要的訊息與療癒。
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-4">
               {emotionCards.map((card) => (
                 <button
                   key={card.id}

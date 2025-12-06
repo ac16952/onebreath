@@ -2,8 +2,8 @@ import React from 'react';
 
 const About: React.FC = () => {
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 animate-fade-in">
-      <h1 className="text-3xl font-semibold text-morandi-charcoal mb-4">BreathNest – 網站故事</h1>
+    <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 md:p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 animate-fade-in overflow-y-auto">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-morandi-charcoal mb-4">BreathNest – 網站故事</h1>
 
       <p className="text-morandi-charcoal/80 leading-relaxed mb-4">
         BreathNest 的誕生，來自一個很 Z 世代的直覺：

@@ -100,12 +100,12 @@ const BottleRelease: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-3xl mx-auto p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 animate-fade-in">
-      <h2 className="text-2xl font-semibold text-morandi-charcoal mb-3 flex items-center">
+    <div ref={containerRef} className="w-full max-w-3xl mx-auto p-4 sm:p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 animate-fade-in overflow-y-auto">
+      <h2 className="text-xl sm:text-2xl font-semibold text-morandi-charcoal mb-3 flex items-center">
         <span className="mr-2">🏺</span> 釋放煩惱
       </h2>
 
-      <p className="text-morandi-charcoal/70 mb-4">把你現在最在意或煩惱的一件事寫下，按下「封存」它會變成一個漂流瓶，帶著你的煩惱沿著河道漂走，讓心靜一會兒。</p>
+      <p className="text-morandi-charcoal/70 mb-4 text-sm sm:text-base">把你現在最在意或煩惱的一件事寫下，按下「封存」它會變成一個漂流瓶，帶著你的煩惱沿著河道漂走，讓心靜一會兒。</p>
 
       <textarea
         aria-label="寫下煩惱"
@@ -118,19 +118,19 @@ const BottleRelease: React.FC = () => {
       <div className="flex items-center space-x-3">
         <button
           onClick={handleSeal}
-          className="px-6 py-2 rounded-full bg-morandi-green text-white shadow hover:brightness-95 transition"
+          className="px-4 sm:px-6 py-2 rounded-full bg-morandi-green text-white shadow hover:brightness-95 transition text-sm sm:text-base"
         >
           封存
         </button>
         <button
           onClick={() => setText('')}
-          className="px-4 py-2 rounded-full bg-white border border-gray-200 text-morandi-charcoal hover:bg-gray-50 transition"
+          className="px-3 sm:px-4 py-2 rounded-full bg-white border border-gray-200 text-morandi-charcoal hover:bg-gray-50 transition text-sm sm:text-base"
         >
           取消
         </button>
       </div>
 
-      <div className="relative mt-8 h-40 overflow-auto">
+      <div className="relative mt-6 sm:mt-8 h-32 sm:h-40 overflow-auto">
         {/* SVG path is kept for decorative purposes */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox={`0 0 ${Math.max(600, typeof window !== 'undefined' ? window.innerWidth : 800)} 160`} preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <path d={`M 40 120 C ${Math.max(150, 0.25 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 80, ${Math.max(300, 0.6 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 60, ${Math.max(560, (typeof window !== 'undefined' ? window.innerWidth : 600) - 40)} 100`} fill="none" stroke="#E6E6E6" strokeWidth={2} opacity={0.12} />
