@@ -18,6 +18,11 @@ const BottleRelease: React.FC = () => {
   const idRef = useRef(1);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
+  const floatingRef = useRef(floating);
+
+  useEffect(() => {
+    floatingRef.current = floating;
+  }, [floating]);
 
   useEffect(() => {
     return () => {
@@ -35,6 +40,16 @@ const BottleRelease: React.FC = () => {
 
   const animate = () => {
     const now = performance.now();
+
+    // Check if we need to continue animating based on CURRENT state
+    const currentFloating = floatingRef.current;
+    const hasActive = currentFloating.some(b => !b.removed && (now - b.start) / b.duration < 1);
+
+    if (!hasActive && currentFloating.length === 0) {
+      rafRef.current = null;
+      return;
+    }
+
     setFloating((prev) => {
       const container = containerRef.current;
       if (!container) return prev;
@@ -45,28 +60,35 @@ const BottleRelease: React.FC = () => {
         if (b.removed) return b;
         const t = Math.min(1, (now - b.start) / b.duration);
 
-        // define path points relative to container
-        const p0 = { x: 40, y: h - 40 };
-        const p1 = { x: w * 0.25, y: h - 80 };
-        const p2 = { x: w * 0.6, y: h - 100 };
-        const p3 = { x: Math.max(w - 40, w * 0.6), y: h - 60 };
+        // Start from middle of screen, shifted down (~2 lines)
+        const p0 = { x: w * 0.5, y: h * 0.5 + 50 };
+        const p1 = { x: w * 0.6, y: h * 0.4 + 50 };
+        const p2 = { x: w * 0.8, y: h * 0.6 + 50 };
+        const p3 = { x: w + 100, y: h * 0.5 + 50 };
 
         const x = cubic(t, p0.x, p1.x, p2.x, p3.x);
-        const y = cubic(t, p0.y, p1.y, p2.y, p3.y);
-        const opacity = t < 1 ? 1 : Math.max(0, 1 - (t - 1) * 2.5);
+        // Add a gentle bobbing effect with Sine wave on top of the bezier curve
+        const base_y = cubic(t, p0.y, p1.y, p2.y, p3.y);
+        const bobbing = Math.sin(t * Math.PI * 4) * 5; // 2 full waves, amplitude 5px
+        const y = base_y + bobbing;
+        const opacity = t < 0.05 ? t * 20 : (t > 0.95 ? (1 - t) * 20 : 1); // fade in/out first/last 5%
 
         return { ...b, x, y, opacity };
       });
       return updated;
     });
 
-    // schedule next frame if any active
     rafRef.current = requestAnimationFrame(() => {
-      const anyActive = floating.some((b) => !b.removed && (performance.now() - b.start) / b.duration < 1);
-      if (anyActive) animate();
-      else {
-        // ensure we still run one more frame to set final state
+      // Check if we should continue the loop
+      const nextFloating = floatingRef.current;
+      const stillActive = nextFloating.some((b) => !b.removed && (performance.now() - b.start) / b.duration < 1);
+
+      if (stillActive) {
+        animate();
+      } else {
+        // Clean up removed items one last time or stop
         setFloating((prev) => prev.map((b) => (b.removed ? b : { ...b, opacity: 0, removed: true })));
+        rafRef.current = null;
       }
     });
   };
@@ -79,28 +101,45 @@ const BottleRelease: React.FC = () => {
   const handleSeal = () => {
     if (!text.trim()) return;
     const id = idRef.current++;
-    const duration = 3000;
+    const duration = 8000;
     const start = performance.now();
 
     const newBottle: FloatingBottle = { id, text: text.trim(), start, duration, opacity: 1 };
     setFloating((s) => [...s, newBottle]);
     setText('');
 
-    setMessage('正在釋放...');
-
     // ensure RAF loop runs
     startAnimationLoopIfNeeded();
 
-    // after animation duration + fade, remove from state and show final message
+    // after animation duration + fade, remove from state
     setTimeout(() => {
       setFloating((s) => s.filter((b) => b.id !== id));
-      setMessage('你已經讓它離開。');
-      setTimeout(() => setMessage(null), 3000);
     }, duration + 400);
   };
 
+  // Sync message with animation state
+  const wasActiveRef = useRef(false);
+  useEffect(() => {
+    // Check if any bottle is currently animating (not removed)
+    const isActive = floating.some(b => !b.removed);
+
+    if (isActive) {
+      if (message !== '正在釋放...') {
+        setMessage('正在釋放...');
+      }
+      wasActiveRef.current = true;
+    } else {
+      // Transition from active to inactive
+      if (wasActiveRef.current) {
+        wasActiveRef.current = false;
+        setMessage('你已經讓它離開。');
+        setTimeout(() => setMessage(null), 3000);
+      }
+    }
+  }, [floating]);
+
   return (
-    <div ref={containerRef} className="w-full max-w-3xl mx-auto p-4 sm:p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 animate-fade-in overflow-y-auto">
+    <div ref={containerRef} className="w-full max-w-3xl mx-auto p-4 sm:p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/60 animate-fade-in overflow-hidden relative min-h-[500px]">
       <h2 className="text-xl sm:text-2xl font-semibold text-morandi-charcoal mb-3 flex items-center">
         <span className="mr-2">🏺</span> 釋放煩惱
       </h2>
@@ -111,11 +150,11 @@ const BottleRelease: React.FC = () => {
         aria-label="寫下煩惱"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className="w-full min-h-[120px] p-4 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-morandi-green mb-4 resize-none text-morandi-charcoal"
+        className="w-full min-h-[120px] p-4 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-morandi-green mb-4 resize-none text-morandi-charcoal relative z-10 bg-white/50 backdrop-blur-sm"
         placeholder="在這裡寫下你的煩惱..."
       />
 
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 relative z-10">
         <button
           onClick={handleSeal}
           className="px-4 sm:px-6 py-2 rounded-full bg-morandi-green text-white shadow hover:brightness-95 transition text-sm sm:text-base"
@@ -130,23 +169,23 @@ const BottleRelease: React.FC = () => {
         </button>
       </div>
 
-      <div className="relative mt-6 sm:mt-8 h-32 sm:h-40 overflow-auto">
+      {/* Animation Area - Full Cover */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* SVG path is kept for decorative purposes */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox={`0 0 ${Math.max(600, typeof window !== 'undefined' ? window.innerWidth : 800)} 160`} preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d={`M 40 120 C ${Math.max(150, 0.25 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 80, ${Math.max(300, 0.6 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 60, ${Math.max(560, (typeof window !== 'undefined' ? window.innerWidth : 600) - 40)} 100`} fill="none" stroke="#E6E6E6" strokeWidth={2} opacity={0.12} />
+        <svg className="absolute inset-0 w-full h-full opacity-30" viewBox={`0 0 ${Math.max(600, typeof window !== 'undefined' ? window.innerWidth : 800)} 600`} preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d={`M 0 300 C ${Math.max(150, 0.25 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 250, ${Math.max(300, 0.6 * (typeof window !== 'undefined' ? window.innerWidth : 600))} 350, ${Math.max(560, (typeof window !== 'undefined' ? window.innerWidth : 600))} 300`} fill="none" stroke="#E6E6E6" strokeWidth={2} />
         </svg>
 
-        {/* Floating bottles (DOM fallback animation) */}
+        {/* Floating bottles */}
         {floating.map((b) => (
           <div
             key={b.id}
             style={{
               position: 'absolute',
-              left: (b.x ?? 40) - 60,
-              top: (b.y ?? 80) - 18,
+              left: (b.x ?? 40) - 60, // Ensure centering logic is correct or adjust
+              top: (b.y ?? 300) - 18,
               transition: 'opacity 0.2s linear',
               opacity: b.opacity ?? 1,
-              pointerEvents: 'none',
               transform: 'translateZ(0)'
             }}
           >
